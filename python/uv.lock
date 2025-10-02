@@ -26,6 +26,7 @@ members = [
     "agent-framework",
     "agent-framework-azure-ai",
     "agent-framework-copilotstudio",
+    "agent-framework-cosmos",
     "agent-framework-devui",
     "agent-framework-lab-gaia",
     "agent-framework-lab-lightning",
@@ -81,6 +82,9 @@ azure = [
 azure-ai = [
     { name = "agent-framework-azure-ai", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
 ]
+cosmos = [
+    { name = "agent-framework-cosmos", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
+]
 devui = [
     { name = "agent-framework-devui", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
 ]
@@ -111,6 +115,7 @@ requires-dist = [
     { name = "agent-framework-copilotstudio", marker = "extra == 'all'", editable = "packages/copilotstudio" },
     { name = "agent-framework-copilotstudio", marker = "extra == 'microsoft'", editable = "packages/copilotstudio" },
     { name = "agent-framework-copilotstudio", marker = "extra == 'microsoft-copilotstudio'", editable = "packages/copilotstudio" },
+    { name = "agent-framework-cosmos", marker = "extra == 'cosmos'", editable = "packages/cosmos" },
     { name = "agent-framework-devui", marker = "extra == 'all'", editable = "packages/devui" },
     { name = "agent-framework-devui", marker = "extra == 'devui'", editable = "packages/devui" },
     { name = "agent-framework-mem0", marker = "extra == 'all'", editable = "packages/mem0" },
@@ -135,7 +140,7 @@ requires-dist = [
     { name = "pydantic-settings", specifier = ">=2,<3" },
     { name = "typing-extensions" },
 ]
-provides-extras = ["azure-ai", "azure", "microsoft-copilotstudio", "microsoft", "redis", "viz", "runtime", "mem0", "devui", "all"]
+provides-extras = ["azure-ai", "azure", "cosmos", "microsoft-copilotstudio", "microsoft", "redis", "viz", "runtime", "mem0", "devui", "all"]
 
 [[package]]
 name = "agent-framework-azure-ai"
@@ -169,6 +174,24 @@ dependencies = [
 requires-dist = [
     { name = "agent-framework", editable = "packages/main" },
     { name = "microsoft-agents-copilotstudio-client", specifier = ">=0.3.1" },
+]
+
+[[package]]
+name = "agent-framework-cosmos"
+version = "0.0.0b1"
+source = { editable = "packages/cosmos" }
+dependencies = [
+    { name = "agent-framework", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
+    { name = "azure-cosmos", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.11' and sys_platform == 'darwin') or (python_full_version < '3.11' and sys_platform == 'linux') or (python_full_version < '3.11' and sys_platform == 'win32')" },
+    { name = "numpy", version = "2.3.3", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and sys_platform == 'darwin') or (python_full_version >= '3.11' and sys_platform == 'linux') or (python_full_version >= '3.11' and sys_platform == 'win32')" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "agent-framework", editable = "packages/main" },
+    { name = "azure-cosmos", specifier = ">=4.9.0" },
+    { name = "numpy", specifier = ">=2.2.6" },
 ]
 
 [[package]]
@@ -287,6 +310,7 @@ dependencies = [
     { name = "agent-framework", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "agent-framework-azure-ai", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "agent-framework-copilotstudio", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
+    { name = "agent-framework-cosmos", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "agent-framework-devui", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "agent-framework-lab-gaia", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "agent-framework-mem0", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
@@ -322,6 +346,7 @@ requires-dist = [
     { name = "agent-framework", editable = "packages/main" },
     { name = "agent-framework-azure-ai", editable = "packages/azure-ai" },
     { name = "agent-framework-copilotstudio", editable = "packages/copilotstudio" },
+    { name = "agent-framework-cosmos", editable = "packages/cosmos" },
     { name = "agent-framework-devui", editable = "packages/devui" },
     { name = "agent-framework-lab-gaia", editable = "packages/lab/gaia" },
     { name = "agent-framework-mem0", editable = "packages/mem0" },
@@ -627,6 +652,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/5a/7f/5de13a331a5f2919417819cc37dcf7c897018f02f83aa82b733e6629a6a6/azure_core_tracing_opentelemetry-1.0.0b12.tar.gz", hash = "sha256:bb454142440bae11fd9d68c7c1d67ae38a1756ce808c5e4d736730a7b4b04144", size = 26010, upload-time = "2025-03-21T00:18:37.346Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/76/5e/97a471f66935e7f89f521d0e11ae49c7f0871ca38f5c319dccae2155c8d8/azure_core_tracing_opentelemetry-1.0.0b12-py3-none-any.whl", hash = "sha256:38fd42709f1cc4bbc4f2797008b1c30a6a01617e49910c05daa3a0d0c65053ac", size = 11962, upload-time = "2025-03-21T00:18:38.581Z" },
+]
+
+[[package]]
+name = "azure-cosmos"
+version = "4.9.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "azure-core", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
+    { name = "typing-extensions", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/be/7c/a4e7810f85e7f83d94265ef5ff0fb1efad55a768de737d940151ea2eec45/azure_cosmos-4.9.0.tar.gz", hash = "sha256:c70db4cbf55b0ff261ed7bb8aa325a5dfa565d3c6eaa43d75d26ae5e2ad6d74f", size = 1824155, upload-time = "2024-11-19T04:09:30.195Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/61/dc/380f843744535497acd0b85aacb59565c84fc28bf938c8d6e897a858cd95/azure_cosmos-4.9.0-py3-none-any.whl", hash = "sha256:3b60eaa01a16a857d0faf0cec304bac6fa8620a81bc268ce760339032ef617fe", size = 303157, upload-time = "2024-11-19T04:09:32.148Z" },
 ]
 
 [[package]]

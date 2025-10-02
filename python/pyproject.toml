@@ -7,6 +7,7 @@ dependencies = [
     "agent-framework",
     "agent-framework-azure-ai",
     "agent-framework-copilotstudio",
+    "agent-framework-cosmos",
     "agent-framework-mem0",
     "agent-framework-redis",
     "agent-framework-devui",
@@ -61,6 +62,7 @@ agent-framework-mem0 = { workspace = true }
 agent-framework-redis = { workspace = true }
 agent-framework-runtime = { workspace = true }
 agent-framework-devui = { workspace = true }
+agent-framework-cosmos = { workspace = true }
 
 [tool.ruff]
 line-length = 120
